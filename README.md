@@ -2,6 +2,9 @@
 
 This repository contains a Proof of Concept (POC) for testing web applications using Java, Maven, JUnit 5, and Allure.
 
+### Youtube course
+[@Julian Mesa Automation](https://www.youtube.com/watch?v=tQCrA2PZQUE&list=PLeo6Q1inqlOckA9qXKo6V1MarbZas4IRo)
+
 ### Technologies Used
 * Java: The programming language used for writing the tests.
 * Maven: A build automation tool used for managing project dependencies and building the project.
