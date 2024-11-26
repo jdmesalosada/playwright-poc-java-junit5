@@ -4,6 +4,9 @@ import com.microsoft.playwright.junit.Options;
 import com.microsoft.playwright.junit.OptionsFactory;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
 import org.junit.jupiter.api.Test;
 import pageobjects.BuyPage;
 import pageobjects.HomePage;
@@ -11,6 +14,7 @@ import pageobjects.ItemPage;
 import pageobjects.ResultsPage;
 
 @UsePlaywright(NavigateTest.CustomOptions.class)
+@Feature("Search for products")
 public class NavigateTest {
 
     public static class CustomOptions implements OptionsFactory{
@@ -22,6 +26,7 @@ public class NavigateTest {
     }
 
     @Test
+    @Description("Searching for a product 1")
     void navigateToPage(Page page) {
 
         HomePage homePage = new HomePage(page);
@@ -39,28 +44,44 @@ public class NavigateTest {
     }
 
     @Test
+    @Description("Searching for a product 2")
     void navigateToPage2(Page page) {
-        page.navigate("https://www.mercadolibre.com.co/");
+        HomePage homePage = new HomePage(page);
+        homePage.navigate();
+        homePage.search("guitarra electrica");
 
-        page.getByPlaceholder("Buscar productos, marcas y má").click();
-        page.getByPlaceholder("Buscar productos, marcas y má").fill("guitarra electrica");
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Buscar")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Guitarra eléctrica Ibanez RG GIO GRG121DX soloist de álamo black flat con"))
-                .click();
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Comprar ahora")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Ingresar")).click();
+        ResultsPage resultsPage = new ResultsPage(page);
+        resultsPage.clickOnItem();
+
+        ItemPage itemPage = new ItemPage(page);
+        itemPage.clickOnBuyNow();
+
+        BuyPage buyPage = new BuyPage(page);
+        buyPage.clickOnSignIn();
     }
 
     @Test
+    @Description("""
+            Searching for a product 3
+            foo foo foo foo foo foo foo
+            foo foo foo foo
+            foo foo foo foo foo
+            foo foo
+            """)
+    @Link(value = "Issue-389", url = "http://www.google.com")
     void navigateToPage3(Page page) {
-        page.navigate("https://www.mercadolibre.com.co/");
-        page.getByPlaceholder("Buscar productos, marcas y má").click();
-        page.getByPlaceholder("Buscar productos, marcas y má").fill("guitarra electrica");
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Buscar")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Guitarra eléctrica Ibanez RG GIO GRG121DX soloist de álamo black flat con"))
-                .click();
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Comprar ahora")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Ingresar")).click();
+        HomePage homePage = new HomePage(page);
+        homePage.navigate();
+        homePage.search("guitarra electrica");
+
+        ResultsPage resultsPage = new ResultsPage(page);
+        resultsPage.clickOnItem();
+
+        ItemPage itemPage = new ItemPage(page);
+        itemPage.clickOnBuyNow();
+
+        BuyPage buyPage = new BuyPage(page);
+        buyPage.clickOnSignIn();
     }
 
 }

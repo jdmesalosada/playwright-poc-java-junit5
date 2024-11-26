@@ -3,6 +3,7 @@ package pageobjects;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 public class ResultsPage {
 
@@ -16,6 +17,7 @@ public class ResultsPage {
     }
 
 
+    @Step("Clicking on result")
     public void clickOnItem(){
         this.resultItem.click();
     }
