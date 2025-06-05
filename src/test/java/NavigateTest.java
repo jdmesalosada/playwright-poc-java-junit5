@@ -1,13 +1,13 @@
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.Options;
 import com.microsoft.playwright.junit.OptionsFactory;
 import com.microsoft.playwright.junit.UsePlaywright;
-import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Link;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pageobjects.BuyPage;
 import pageobjects.HomePage;
 import pageobjects.ItemPage;
@@ -83,5 +83,16 @@ public class NavigateTest {
         BuyPage buyPage = new BuyPage(page);
         buyPage.clickOnSignIn();
     }
+
+    @ParameterizedTest
+    //@ValueSource(strings = {"guitarra electrica", "iphone", "ipad"})
+    @CsvFileSource(resources = "search_criteria.csv", numLinesToSkip = 1)
+    @Description("Searching for a product 1")
+    void searchByCriteria(String searchKey, Page page) {
+        HomePage homePage = new HomePage(page);
+        homePage.navigate();
+        homePage.search(searchKey);
+    }
+
 
 }
